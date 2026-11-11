@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Language Translator - Break Language Barriers</title>
+  <meta name="description" content="AI-Based modern, responsive language translator supporting Indian regional and world languages with MyMemory API and Web Speech synthesis.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background Ambient Glow -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="brand-icon">🌍</span>
+        <div class="brand-text">
+          <span class="brand-title">Language Translator</span>
+          <span class="brand-badge">AI Powered</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#translator" class="nav-link active"><i class="fa-solid fa-language"></i> Home</a>
+        <a href="#history-section" class="nav-link" id="nav-history"><i class="fa-solid fa-clock-rotate-left"></i> History</a>
+        <button type="button" class="nav-link btn-link" id="open-about-btn"><i class="fa-solid fa-circle-info"></i> About</button>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark and Light Mode" title="Toggle Dark/Light Mode">
+          <i class="fa-solid fa-sun light-icon"></i>
+          <i class="fa-solid fa-moon dark-icon"></i>
+          <span class="theme-text">Mode</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content" id="translator">
+    <!-- Hero / Welcome Section -->
+    <section class="hero-section">
+      <div class="hero-badge">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Instant Neural Translation
+      </div>
+      <h1 class="hero-title">Break Language Barriers</h1>
+      <p class="hero-subtitle">Translate your words into any language with real-time audio playback, history tracking, and dialect support.</p>
+    </section>
+
+    <!-- Translator Workbench Card -->
+    <section class="translator-card">
+      <!-- Language Bar -->
+      <div class="lang-bar">
+        <!-- Source Language Selector -->
+        <div class="lang-selector-group">
+          <label for="source-lang" class="selector-label">
+            <i class="fa-solid fa-globe"></i> From
+          </label>
+          <div class="select-wrapper">
+            <select id="source-lang" class="custom-select" aria-label="Select Source Language">
+              <!-- Dynamically populated / fallback options -->
+              <option value="autodetect">✨ Auto Detect</option>
+              <option value="en" selected>English</option>
+              <option value="te">Telugu (తెలుగు)</option>
+              <option value="hi">Hindi (हिन्दी)</option>
+              <option value="ta">Tamil (தமிழ்)</option>
+              <option value="kn">Kannada (ಕನ್ನಡ)</option>
+              <option value="ml">Malayalam (മലയാളം)</option>
+              <option value="fr">French (Français)</option>
+              <option value="de">German (Deutsch)</option>
+              <option value="es">Spanish (Español)</option>
+              <option value="ar">Arabic (العربية)</option>
+            </select>
+            <i class="fa-solid fa-chevron-down select-chevron"></i>
+          </div>
+        </div>
+
+        <!-- Swap Languages Button -->
+        <button id="swap-lang-btn" class="swap-btn" title="Swap languages" aria-label="Swap source and target languages">
+          <i class="fa-solid fa-arrow-right-arrow-left"></i>
+        </button>
+
+        <!-- Target Language Selector -->
+        <div class="lang-selector-group">
+          <label for="target-lang" class="selector-label">
+            <i class="fa-solid fa-bullseye"></i> To
+          </label>
+          <div class="select-wrapper">
+            <select id="target-lang" class="custom-select" aria-label="Select Target Language">
+              <!-- Dynamically populated / fallback options -->
+              <option value="te">Telugu (తెలుగు)</option>
+              <option value="hi">Hindi (हिन्दी)</option>
+              <option value="es" selected>Spanish (Español)</option>
+              <option value="fr">French (Français)</option>
+              <option value="de">German (Deutsch)</option>
+              <option value="ta">Tamil (தமிழ்)</option>
+              <option value="kn">Kannada (ಕನ್ನಡ)</option>
+              <option value="ml">Malayalam (മലയാളം)</option>
+              <option value="ar">Arabic (العربية)</option>
+              <option value="en">English</option>
+            </select>
+            <i class="fa-solid fa-chevron-down select-chevron"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dual Text Panels Container -->
+      <div class="panels-grid">
+        <!-- Input Box (Source) -->
+        <div class="panel-box input-box" id="input-panel">
+          <div class="panel-header">
+            <span class="panel-tag" id="source-badge">English</span>
+            <div class="panel-quick-actions">
+              <button id="convert-typing-btn" class="icon-btn" title="Convert English typing to native script (e.g. ela unaru -> ఎలా ఉన్నారు)" aria-label="Convert typing to native script">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+              </button>
+              <button id="mic-btn" class="icon-btn" title="Speech to text (Voice Typing)" aria-label="Voice typing">
+                <i class="fa-solid fa-microphone"></i>
+              </button>
+              <button id="paste-input-btn" class="icon-btn" title="Paste text from clipboard" aria-label="Paste text">
+                <i class="fa-regular fa-clipboard"></i>
+              </button>
+              <button id="clear-input-btn" class="icon-btn" title="Clear text" aria-label="Clear input text">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="textarea-container">
+            <textarea 
+              id="source-text" 
+              class="panel-textarea" 
+              placeholder="Enter text to translate here..." 
+              maxlength="1000"
+              spellcheck="true"
+            ></textarea>
+          </div>
+
+          <div class="panel-footer">
+            <div class="footer-left">
+              <button id="listen-source-btn" class="action-btn text-btn" title="Listen to original text" aria-label="Listen to original text">
+                <i class="fa-solid fa-volume-high"></i> <span>Listen</span>
+              </button>
+            </div>
+            <div class="footer-right">
+              <span id="char-counter" class="char-count">0 / 1000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Output Box (Target) -->
+        <div class="panel-box output-box" id="output-panel">
+          <div class="panel-header">
+            <span class="panel-tag" id="target-badge">Spanish</span>
+            <div class="panel-status" id="translation-status">
+              <span class="status-dot"></span> Ready
+            </div>
+          </div>
+
+          <div class="textarea-container output-container">
+            <div id="loading-overlay" class="loading-overlay hidden">
+              <div class="spinner"></div>
+              <p class="loading-text">Translating with MyMemory API...</p>
+            </div>
+            <textarea 
+              id="target-text" 
+              class="panel-textarea output-textarea" 
+              placeholder="Translation will appear here..." 
+              readonly
+            ></textarea>
+          </div>
+
+          <div class="panel-footer">
+            <div class="footer-left">
+              <button id="listen-target-btn" class="action-btn text-btn" title="Listen to translation" aria-label="Listen to translation">
+                <i class="fa-solid fa-volume-high"></i> <span>Listen</span>
+              </button>
+              <button id="copy-target-btn" class="action-btn text-btn" title="Copy translation to clipboard" aria-label="Copy translation">
+                <i class="fa-regular fa-copy"></i> <span>Copy</span>
+              </button>
+            </div>
+            <div class="footer-right">
+              <button id="share-target-btn" class="icon-btn" title="Share translated text" aria-label="Share text">
+                <i class="fa-solid fa-share-nodes"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Bar with Main Translate Button -->
+      <div class="translate-action-bar">
+        <button id="translate-btn" class="primary-btn translate-btn">
+          <span class="btn-spinner hidden" id="btn-spinner"></span>
+          <i class="fa-solid fa-arrow-right-arrow-left btn-icon" id="btn-icon"></i>
+          <span class="btn-text">Translate Now</span>
+          <span class="shortcut-badge">Ctrl + Enter</span>
+        </button>
+        <button id="clear-all-btn" class="secondary-btn" title="Clear all boxes">
+          <i class="fa-solid fa-trash-can"></i> Clear All
+        </button>
+      </div>
+    </section>
+
+    <!-- Translation History Section -->
+    <section class="history-section" id="history-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <i class="fa-solid fa-clock-rotate-left section-icon"></i>
+          <div>
+            <h2 class="section-title">Translation History</h2>
+            <p class="section-subtitle">Your recent translations saved locally on this browser</p>
+          </div>
+        </div>
+        <div class="history-actions">
+          <button id="clear-history-btn" class="btn-danger-outline" title="Clear history">
+            <i class="fa-solid fa-trash-can"></i> Clear History
+          </button>
+        </div>
+      </div>
+
+      <div id="history-list" class="history-grid">
+        <!-- Rendered dynamically -->
+        <div class="history-empty" id="history-empty">
+          <i class="fa-regular fa-folder-open empty-icon"></i>
+          <p>No recent translations yet. Translate some text to build your history!</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- About Modal -->
+  <div id="about-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="about-modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">🌍</span>
+          <h3 id="about-modal-title" class="modal-title">About Language Translator</h3>
+        </div>
+        <button id="close-about-btn" class="modal-close-btn" aria-label="Close Modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-intro">
+          <strong>Language Translator</strong> is a modern, responsive AI translation web application designed to bridge multilingual communication across Indian regional languages and major global languages.
+        </p>
+
+        <div class="features-list">
+          <div class="feature-item">
+            <i class="fa-solid fa-bolt feature-icon"></i>
+            <div>
+              <strong>Instant Cloud Translation</strong>
+              <p>Powered by the open MyMemory Translation API for accurate crowdsourced and neural translations.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <i class="fa-solid fa-headphones feature-icon"></i>
+            <div>
+              <strong>Text-to-Speech Engine</strong>
+              <p>Uses the native browser Web Speech API to read out source text and translated output in natural voices.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <i class="fa-solid fa-microphone feature-icon"></i>
+            <div>
+              <strong>Voice Input (Speech-to-Text)</strong>
+              <p>Speak your sentences directly into the microphone for hands-free translation in supported browsers.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <i class="fa-solid fa-database feature-icon"></i>
+            <div>
+              <strong>Local History Storage</strong>
+              <p>Translations are securely stored in your browser's localStorage for quick retrieval and review.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tech-stack-section">
+          <h4>Technologies Used</h4>
+          <div class="tech-pills">
+            <span class="tech-pill"><i class="fa-brands fa-html5"></i> HTML5</span>
+            <span class="tech-pill"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
+            <span class="tech-pill"><i class="fa-brands fa-js"></i> ES6+ JavaScript</span>
+            <span class="tech-pill"><i class="fa-solid fa-cloud"></i> MyMemory API</span>
+            <span class="tech-pill"><i class="fa-solid fa-wave-square"></i> Web Speech API</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="modal-ok-btn" class="primary-btn sm-btn">Got It</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-col about-col">
+        <div class="footer-brand">
+          <span class="footer-icon">🌍</span>
+          <span class="footer-title">Language Translator</span>
+        </div>
+        <p class="footer-desc">
+          Empowering global connections through fast, accessible, and intuitive multi-language translation.
+        </p>
+      </div>
+
+      <div class="footer-col tech-col">
+        <h4 class="footer-heading">Technologies</h4>
+        <ul class="footer-list">
+          <li><i class="fa-solid fa-check"></i> HTML5 Semantic Structure</li>
+          <li><i class="fa-solid fa-check"></i> CSS3 Flexbox & Grid</li>
+          <li><i class="fa-solid fa-check"></i> Vanilla JavaScript (Async/Await)</li>
+          <li><i class="fa-solid fa-check"></i> MyMemory Translation API</li>
+          <li><i class="fa-solid fa-check"></i> Web Speech Synthesis & Recognition</li>
+        </ul>
+      </div>
+
+      <div class="footer-col info-col">
+        <h4 class="footer-heading">Quick Actions</h4>
+        <ul class="footer-list">
+          <li><a href="#translator"><i class="fa-solid fa-angle-right"></i> Translate Text</a></li>
+          <li><a href="#history-section"><i class="fa-solid fa-angle-right"></i> View History</a></li>
+          <li><a href="javascript:void(0)" id="footer-about-link"><i class="fa-solid fa-angle-right"></i> About Project</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Language Translator. All rights reserved. Built with modern web standards.</p>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>
